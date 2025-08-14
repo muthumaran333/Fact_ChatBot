@@ -1,5 +1,5 @@
-# streamlit_app1.py
 import os
+import re
 import streamlit as st
 from src.agent_wrapper import get_agent
 from google.generativeai import configure, GenerativeModel
@@ -46,19 +46,23 @@ API_KEY = os.getenv("GOOGLE_API_KEY", "your_api_key_here")
 configure(api_key=API_KEY)
 gemini_model = GenerativeModel("gemini-2.5-flash")
 
+def clean_output(text: str) -> str:
+    """Remove markdown formatting like **, *, etc."""
+    return re.sub(r"(\*\*|\*)", "", text)
+
 def fact_check_claim_with_gemini(claim: str) -> str:
     prompt = f"""
     You are a fact-checking assistant. Verify the following claim and respond in the format:
-    **Verdict:** True/False/Partially True
+    Verdict: True/False/Partially True
     Explanation: Short factual reasoning with sources if possible.
 
     Claim: "{claim}"
     """
     try:
         response = gemini_model.generate_content(prompt)
-        return response.text.strip()
+        return clean_output(response.text.strip())
     except Exception as e:
-        return f"**Error:** Gemini check failed: {e}"
+        return f"Error: Gemini check failed: {e}"
 
 # ================== Agent ==================
 agent = get_agent()
@@ -70,7 +74,7 @@ for message in st.session_state.chat_history:
             f"""
             <div style='display: flex; align-items: flex-start; margin-bottom: 12px;'>
                 <img src="{BOT_AVATAR}" width="40" style="border-radius:50%; margin-right:10px;">
-                <div style='background: #f4f4f4; padding: 12px 18px; border-radius: 12px; max-width: 70%;'>
+                <div style='background: #f4f4f4; color: black; padding: 12px 18px; border-radius: 12px; max-width: 70%;'>
                     {message['bot']}
                 </div>
             </div>
@@ -82,7 +86,7 @@ for message in st.session_state.chat_history:
         st.markdown(
             f"""
             <div style='display: flex; justify-content: flex-end; margin-bottom: 12px;'>
-                <div style='background: linear-gradient(145deg, #4facfe, #00f2fe); color: white;
+                <div style='background: linear-gradient(145deg, #e0e0e0, #f5f5f5); color: black;
                             padding: 12px 18px; border-radius: 12px; max-width: 70%;'>
                     {message['user']}
                 </div>
@@ -97,7 +101,7 @@ st.markdown("---")
 col1, col2, col3 = st.columns([0.1, 0.75, 0.15])
 
 with col1:
-    if st.button("➕", help="Attach file"):
+    if st.button("📎", help="Attach file"):
         st.session_state.show_uploader = not st.session_state.show_uploader
 
 with col2:
@@ -108,7 +112,7 @@ with col2:
     )
 
 with col3:
-    send_clicked = st.button("📤", help="Send")
+    send_clicked = st.button("➤", help="Send")  # Changed icon here
 
 # File uploader appears only if toggled
 uploaded_file = None
@@ -127,4 +131,3 @@ if send_clicked and user_input.strip():
         bot_response = fact_check_claim_with_gemini(user_input)
     st.session_state.chat_history.append({"user": user_input, "bot": bot_response})
     st.rerun()
-
