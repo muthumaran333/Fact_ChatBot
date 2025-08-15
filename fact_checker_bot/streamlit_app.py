@@ -306,11 +306,7 @@ with st.sidebar:
     for idx, claim in enumerate(claims):
         button_id = f"claim_{idx}"
 
-        # Initialize session state
-        if button_id not in st.session_state:
-            st.session_state[button_id] = False
-
-        # Style the Streamlit button using CSS
+        # Style the button with CSS
         st.markdown(
             f"""
             <style>
@@ -335,10 +331,12 @@ with st.sidebar:
             unsafe_allow_html=True
         )
 
-        # Streamlit button (fully functional)
+        # Functional button
         if st.button(claim, key=button_id):
+            # Do not try to set st.session_state[button_id]!
             st.session_state.user_input = claim
             st.session_state.send_clicked = True
+
 
 
     
