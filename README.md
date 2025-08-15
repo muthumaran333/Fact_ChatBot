@@ -9,20 +9,20 @@
 1. **Image 1:** 
    *Shows the app homepage with the project title, a clean header, and sidebar navigation for sample claims.*
 
-   ![sample image](fact_checker_bot\image\image1.png)
+   ![sample image](https://github.com/muthumaran333/Fact_ChatBot/blob/main/fact_checker_bot/image/image1.png)
 
 2. **Image 2:** 
    *Demonstrates the sidebar with preloaded sample claims, allowing users to click and test instantly.*
-    ![sample image](fact_checker_bot\image\image2.png)
+    ![sample image](https://github.com/muthumaran333/Fact_ChatBot/blob/main/fact_checker_bot/image/image2.png)
 
 3. **Image 3:** `fact_checker_bot\image\image3.png`
    *Displays a claim input field in the main area along with the verdict and explanation after verification.*
-    ![sample image](fact_checker_bot\image\image3.png)
+    ![sample image](https://github.com/muthumaran333/Fact_ChatBot/blob/main/fact_checker_bot/image/image3.png)
 
 4. **Image 4:** `fact_checker_bot\image\image4.png`
    *Shows evidence and references fetched from trusted sources supporting the verdict (True/False/Uncertain).*
 
-    ![sample image](fact_checker_bot\image\image4.png)
+    ![sample image](https://github.com/muthumaran333/Fact_ChatBot/blob/main/fact_checker_bot/image/image4.png)
 
 ---
 
